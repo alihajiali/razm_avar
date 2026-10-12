@@ -58,7 +58,8 @@
       "target": [
         "dmg",
         "zip"
-      ]
+      ],
+      "icon": "assets/branding/logo.png"
     },
     "artifactName": "razm-avar-${version}-${os}-${arch}.${ext}",
     "executableName": "razm-avar",
@@ -67,7 +68,8 @@
         "nsis",
         "zip"
       ],
-      "signAndEditExecutable": false
+      "icon": "assets/branding/logo.png",
+      "signExecutable": false
     },
     "nsis": {
       "oneClick": false,
@@ -83,7 +85,8 @@
       "category": "Game",
       "maintainer": "Ali HajiAli <90006456+alihajiali@users.noreply.github.com>",
       "synopsis": "Persian tactical first-person shooter",
-      "executableName": "razm-avar"
+      "executableName": "razm-avar",
+      "icon": "assets/branding/logo.png"
     }
   },
   "dependencies": {

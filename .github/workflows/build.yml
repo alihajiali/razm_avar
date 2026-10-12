@@ -91,7 +91,7 @@ jobs:
         run: npm ci
       - name: Test game logic on this platform
         run: npm test
-      - name: Package desktop app
+      - name: Package desktop app with Razm Avar icon
         run: npx --no-install electron-builder --${{ matrix.platform }} --${{ matrix.arch }} --publish never
       - name: Upload installers and archives
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7

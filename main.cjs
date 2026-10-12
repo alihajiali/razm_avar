@@ -10,6 +10,7 @@ function createWindow() {
     minHeight: 600,
     backgroundColor: '#070d11',
     title: 'رزم‌آور · میدان نبرد',
+    icon: path.join(__dirname, 'assets', 'branding', 'logo.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       nodeIntegration: false,
