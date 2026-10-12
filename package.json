@@ -18,7 +18,9 @@
     "test:network": "node scripts/network-smoke.cjs",
     "test:persian": "env -u ELECTRON_RUN_AS_NODE electron scripts/persian-runtime.cjs",
     "format": "prettier --write \"*.{js,cjs,mjs,html,css,json}\" \"scripts/**/*.{js,cjs,mjs}\" \".prettierrc.json\"",
-    "format:check": "prettier --check \"*.{js,cjs,mjs,html,css,json}\" \"scripts/**/*.{js,cjs,mjs}\" \".prettierrc.json\""
+    "format:check": "prettier --check \"*.{js,cjs,mjs,html,css,json}\" \"scripts/**/*.{js,cjs,mjs}\" \".prettierrc.json\"",
+    "build:win": "electron-builder --win --publish never",
+    "build:linux": "electron-builder --linux --publish never"
   },
   "devDependencies": {
     "electron": "^40.0.0",
@@ -57,6 +59,31 @@
         "dmg",
         "zip"
       ]
+    },
+    "artifactName": "razm-avar-${version}-${os}-${arch}.${ext}",
+    "executableName": "razm-avar",
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "category": "Game",
+      "maintainer": "Ali HajiAli <90006456+alihajiali@users.noreply.github.com>",
+      "synopsis": "Persian tactical first-person shooter",
+      "executableName": "razm-avar"
     }
   },
   "dependencies": {
