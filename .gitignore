@@ -1,0 +1,35 @@
+# Dependencies and generated packages
+node_modules/
+dist/
+release/
+coverage/
+.cache/
+*.tsbuildinfo
+
+# Local captures and test output
+previews/
+playwright-report/
+test-results/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Editor and operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak

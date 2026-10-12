@@ -1,0 +1,7 @@
+node_modules/
+vendor/
+dist/
+assets/
+previews/
+docs/images/
+package-lock.json

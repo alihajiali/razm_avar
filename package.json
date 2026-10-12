@@ -1,0 +1,70 @@
+{
+  "name": "sector-zero",
+  "version": "1.0.0",
+  "description": "رزم‌آور؛ بازی سه‌بعدی نبرد تاکتیکی با دیالوگ فارسی",
+  "author": {
+    "name": "Ali HajiAli",
+    "email": "90006456+alihajiali@users.noreply.github.com"
+  },
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check main.cjs && node --input-type=module --check < game.js && node --check arena.mjs && node --check graphics.mjs && node --check operations.mjs && node --check maps.mjs && node --check multiplayer-world.mjs && node --check network.cjs && node --check network-ipc.cjs && node --check preload.cjs && node --check dialogues.mjs && node --check voice.mjs",
+    "test": "node scripts/smoke.mjs && node scripts/operations-smoke.mjs && node scripts/maps-smoke.mjs && node scripts/multiplayer-smoke.mjs && node scripts/voice-smoke.mjs",
+    "build:mac": "electron-builder --mac --publish never",
+    "build:mac:arm64": "electron-builder --mac --arm64 --publish never",
+    "build:mac:x64": "electron-builder --mac --x64 --publish never",
+    "test:network": "node scripts/network-smoke.cjs",
+    "test:persian": "env -u ELECTRON_RUN_AS_NODE electron scripts/persian-runtime.cjs",
+    "format": "prettier --write \"*.{js,cjs,mjs,html,css,json}\" \"scripts/**/*.{js,cjs,mjs}\" \".prettierrc.json\"",
+    "format:check": "prettier --check \"*.{js,cjs,mjs,html,css,json}\" \"scripts/**/*.{js,cjs,mjs}\" \".prettierrc.json\""
+  },
+  "devDependencies": {
+    "electron": "^40.0.0",
+    "electron-builder": "^26.0.12",
+    "prettier": "3.9.10"
+  },
+  "build": {
+    "appId": "com.sectorzero.game",
+    "productName": "رزم‌آور",
+    "asar": true,
+    "files": [
+      "main.cjs",
+      "index.html",
+      "style.css",
+      "game.js",
+      "arena.mjs",
+      "vendor/**/*",
+      "graphics.mjs",
+      "assets/**/*",
+      "operations.mjs",
+      "maps.mjs",
+      "multiplayer-world.mjs",
+      "network.cjs",
+      "network-ipc.cjs",
+      "preload.cjs",
+      "dialogues.mjs",
+      "voice.mjs"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.action-games",
+      "identity": null,
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    }
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  },
+  "homepage": "https://github.com/alihajiali/razm_avar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alihajiali/razm_avar.git"
+  }
+}
