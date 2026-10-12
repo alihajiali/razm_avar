@@ -59,7 +59,10 @@
         "dmg",
         "zip"
       ],
-      "icon": "assets/branding/logo.png"
+      "icon": "assets/branding/logo.png",
+      "extendInfo": {
+        "CFBundleName": "رزم‌آور"
+      }
     },
     "artifactName": "razm-avar-${version}-${os}-${arch}.${ext}",
     "executableName": "razm-avar",
