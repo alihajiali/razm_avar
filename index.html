@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'"
+    />
+    <title>رزم‌آور · میدان نبرد</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <header dir="rtl">
+        <div class="brand">رزم<span>‌آور</span> <b id="map-brand"> / کوچه‌های کویر</b></div>
+        <span class="tag">نبرد تاکتیکی · تک‌نفره / آنلاین</span><button id="sound">صدا روشن</button>
+      </header>
+      <section class="viewport" id="viewport">
+        <canvas id="game"></canvas>
+        <div class="vignette"></div>
+        <div id="damage"></div>
+        <div class="topline" dir="ltr">
+          <span id="location">محل شروع</span>
+          <div class="score">
+            <span><span id="score-left-label">برد</span> <b id="wins">0</b></span
+            ><strong id="timer">2:30</strong
+            ><span><b id="losses">0</b> <span id="score-right-label">باخت</span></span>
+          </div>
+          <span id="status">آماده</span>
+        </div>
+        <canvas id="radar" width="180" height="153"></canvas>
+        <div id="feed" dir="rtl"></div>
+        <div id="crosshair"><i></i><i></i><i></i><i></i></div>
+        <div id="scope"><div></div></div>
+        <div id="hitmarker">×</div>
+        <div id="notice"></div>
+        <div id="dialogue" role="status" hidden></div>
+        <div id="overlay">
+          <div class="panel">
+            <div class="eyebrow">رزم‌آور / میدان پهلوانان</div>
+            <h1>رزم<span>‌آور</span></h1>
+            <p id="story">
+              نقشه و مأموریت را انتخاب کن: پاک‌سازی، عملیات بمب یا موج‌های بقا. برای شروع با
+              اسلحه‌های آزاد یا خرید تجهیزات وارد میدان شو.
+            </p>
+            <div class="map-picker">
+              <label for="map">انتخاب نقشه<select id="map"></select></label>
+              <div class="map-details">
+                <canvas id="map-preview" width="156" height="112"></canvas>
+                <div>
+                  <strong id="map-name"></strong>
+                  <p id="map-description"></p>
+                </div>
+              </div>
+            </div>
+            <div class="game-settings">
+              <label for="mode"
+                >حالت بازی<select id="mode">
+                  <option value="clear">پاک‌سازی</option>
+                  <option value="bomb">عملیات بمب</option>
+                  <option value="survival">بقا</option>
+                </select></label
+              ><label for="bomb-role"
+                >نقش عملیات بمب<select id="bomb-role">
+                  <option value="plant">کاشت و محافظت</option>
+                  <option value="defuse">خنثی‌سازی</option>
+                </select></label
+              ><label for="economy"
+                >تجهیزات<select id="economy">
+                  <option value="free">آزاد</option>
+                  <option value="shop">خرید بین راندها</option>
+                </select></label
+              ><label for="challenge"
+                >چالش<select id="challenge">
+                  <option value="heads">۵ تیر به سر</option>
+                  <option value="clean">بدون مرگ</option>
+                  <option value="pistol">فقط کلت</option>
+                </select></label
+              ><label for="difficulty"
+                >درجهٔ سختی<select id="difficulty">
+                  <option value="easy">آسان</option>
+                  <option value="normal" selected>معمولی</option>
+                  <option value="hard">سخت</option>
+                  <option value="expert">حرفه‌ای</option>
+                </select></label
+              ><label for="botcount"
+                >تعداد دشمن‌ها<input
+                  id="botcount"
+                  type="number"
+                  min="1"
+                  max="24"
+                  step="1"
+                  value="12"
+              /></label>
+            </div>
+            <div id="settings-summary">۱۲ دشمن · معمولی · بازگشت پس از ۳ ثانیه</div>
+            <button id="applysettings" hidden>اعمال تنظیمات و شروع راند جدید</button>
+            <div id="records"></div>
+            <div id="report" hidden></div>
+            <button id="network-open" disabled>بازی چندنفره · ساخت یا یافتن سرور</button
+            ><button id="shop-open">فروشگاه تجهیزات · B</button
+            ><button id="play">ورود به میدان ←</button>
+            <div class="voice-settings">
+              <label><input id="voice-enabled" type="checkbox" checked /> دیالوگ‌های فارسی</label
+              ><label
+                >بلندی دیالوگ
+                <input
+                  id="voice-volume"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="80"
+                  aria-label="بلندی دیالوگ" /></label
+              ><button id="voice-preview">شنیدن نمونه</button>
+            </div>
+            <div class="instructions">
+              WASD حرکت · ماوس نگاه · کلیک شلیک · R خشاب<br />۱ تا ۴ انتخاب اسلحه · کلیک راست دوربین
+              تک‌تیرانداز<br />Space پرش · Shift آرام · Ctrl نشستن · Esc توقف<br />G نارنجک · F فلش
+              · V دود · E کاشت/خنثی · B خرید<br />چندنفره: Tab جدول امتیاز · Esc منوی سرور
+            </div>
+          </div>
+        </div>
+        <div class="hud" dir="ltr">
+          <div>
+            <small>جان / زره</small
+            ><strong><span id="health">100</span><em> + </em><span id="armor">100</span></strong>
+          </div>
+          <div class="mission">
+            <small
+              ><span id="hostiles-label">دشمن‌ها</span> / <span id="deaths">0</span> بار زمین
+              خوردن</small
+            ><strong id="remaining">12</strong>
+          </div>
+          <div class="ammo">
+            <small id="weaponname">کلاشینکف</small
+            ><strong><span id="ammo">30</span><em> / </em><span id="reserve">120</span></strong>
+          </div>
+        </div>
+        <div id="objective"></div>
+        <div id="damage-direction">▲</div>
+        <div id="flash-screen"></div>
+        <div id="shop" hidden>
+          <div class="shop-panel">
+            <h2>تجهیزات راند</h2>
+            <p id="shop-wallet"></p>
+            <div id="shop-items"></div>
+            <button id="shop-close">بازگشت</button>
+            <p>خرید در منو، بین راندها یا در محل شروع طی ۲۰ ثانیهٔ اول ممکن است.</p>
+          </div>
+        </div>
+        <div id="scoreboard" hidden>
+          <h2>مبارزهٔ آزاد</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>بازیکن</th>
+                <th>حذف</th>
+                <th>مرگ</th>
+                <th>تیر به سر</th>
+              </tr>
+            </thead>
+            <tbody id="score-rows"></tbody>
+          </table>
+          <small id="network-info"></small><button id="network-resume" hidden>ادامهٔ بازی</button
+          ><button id="network-leave">خروج از سرور</button>
+        </div>
+        <div id="network-panel" hidden>
+          <div class="network-panel">
+            <h2>بازی چندنفره</h2>
+            <p>مبارزهٔ آزاد تا ۸ نفر؛ هر بازیکن می‌تواند میزبان شود.</p>
+            <label>نام بازیکن<input id="player-name" maxlength="24" value="آرش" /></label>
+            <div class="network-fields">
+              <label>نام سرور<input id="server-name" maxlength="24" value="میدان رزم‌آور" /></label
+              ><label
+                >پورت<input
+                  id="server-port"
+                  type="number"
+                  min="1024"
+                  max="65535"
+                  value="27777" /></label
+              ><label
+                >ظرفیت<select id="server-capacity">
+                  <option value="2">۲ نفر</option>
+                  <option value="4">۴ نفر</option>
+                  <option value="8" selected>۸ نفر</option>
+                </select></label
+              >
+            </div>
+            <p id="host-map"></p>
+            <button id="network-host">ساخت سرور و ورود</button>
+            <div class="network-direct">
+              <input
+                id="server-address"
+                dir="ltr"
+                placeholder="192.168.1.20:27777"
+                maxlength="260"
+              /><button id="network-join">اتصال با آدرس</button>
+            </div>
+            <button id="network-scan">یافتن سرورهای شبکهٔ محلی</button>
+            <div id="server-list"></div>
+            <p id="network-message" role="status"></p>
+            <p class="network-help">
+              برای اینترنت، آدرس عمومی میزبان و دسترسی به پورت انتخابی لازم است. کشف خودکار مخصوص یک
+              شبکهٔ محلی است.
+            </p>
+            <button id="network-close">بازگشت</button>
+          </div>
+        </div>
+        <div id="weapons" dir="ltr"></div>
+      </section>
+      <footer dir="rtl">
+        <span>نبرد سه‌بعدی</span><span id="map-footer">نقشه‌های اختصاصی نبرد</span
+        ><span id="fps">۶۰ فریم</span>
+      </footer>
+    </main>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>
